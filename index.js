@@ -1,11 +1,13 @@
 const express = require("express");
-const port = 3000;
+const port = 3001;
 const uuid = require("uuid");
+const cors = require("cors")
 
 const users = [];
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 const checkUserId = (request, response, next) => {
   const { id } = request.params;
@@ -27,13 +29,17 @@ app.get("/users", (request, response) => {
 });
 
 app.post("/users", (request, response) => {
-  const { name, age } = request.body;
+  try {
+    const { name, age } = request.body;
 
-  const user = { id: uuid.v4(), name, age };
+    const user = { id: uuid.v4(), name, age };
 
-  users.push(user);
+    users.push(user);
 
-  return response.status(201).json(user);
+    return response.status(201).json(user);
+  } catch (err) {
+    return response.status(400).json({ error: err.message });
+  }
 });
 
 app.put("/users/:id", checkUserId, (request, response) => {
@@ -56,5 +62,5 @@ app.delete("/users/:id", checkUserId, (request, response) => {
   return response.status(200).json(users);
 });
 app.listen(port, () => {
-  console.log("🚀 Server started on port 3000");
+  console.log("🚀 Server started on port 3001");
 });
