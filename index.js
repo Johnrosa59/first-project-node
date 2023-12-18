@@ -55,7 +55,7 @@ app.put("/users/:id", checkUserId, (request, response) => {
 });
 
 app.delete("/users/:id", checkUserId, (request, response) => {
-  const { index } = request.userIndex;
+  const index  = request.userIndex;
 
   users.splice(index, 1);
 
