@@ -59,7 +59,7 @@ app.delete("/users/:id", checkUserId, (request, response) => {
 
   users.splice(index, 1);
 
-  return response.status(200).json(users);
+  return response.status(204).json(users);
 });
 app.listen(port, () => {
   console.log("🚀 Server started on port 3001");
